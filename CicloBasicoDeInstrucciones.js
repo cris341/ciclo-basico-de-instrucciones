@@ -57,6 +57,36 @@ class CicloBasicoInstrucciones{
         this.mar = this.pc; //El MAR que deberia hacer es buscar el tipo de instrccion que es
         
         //pasamos el tipo de instrccion al MDR 
+        this.mdr = typeInstructions + this.mar;
+        //pasamos el valor al ICR Y despues a la unidad de control
+        this.icr = this.mdr;
+        this.unidadControl = this.icr;
+
+        //le pasamos el espacio de memoria de la instruccio al MAR 
+        this.mar = memory;
+        if(typeInstructions == "STORE"){
+            this.mdr = this.acumulador;
+
+            this.memoria.forEach(element => {
+                if(this.mar in element){
+                    element[this.mar] = this.mdr;
+                }
+            });
+        }else{
+
+        }
+        //ahora buscamos en la memoria el valor que esta en el mar y lo guardamos en el MDR
+        this.mdr = this.memoria.map(objeto => objeto[this.mar]).find(valor => valor !== undefined);
+    }
+
+    //Realiza casi todo el proceso del procesador
+    Procesador(typeInstructions, memory){
+        this.pc = memory;
+        
+        //le pasamos la instruccion a MAR
+        this.mar = this.pc; //El MAR que deberia hacer es buscar el tipo de instrccion que es
+        
+        //pasamos el tipo de instrccion al MDR 
         this.mdr = typeInstructions +" "+ this.mar;
         //pasamos el valor al ICR Y despues a la unidad de control
         this.icr = this.mdr;
